@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity
 
     private void initialize() {
         journalView=findViewById(R.id.rvJournal);
-        String returned_journ= new JournalDbAdapter(getApplicationContext()).getData();
-
         journalView.setHasFixedSize(true);
         journalView.setLayoutManager(new LinearLayoutManager(this));
         listItems=new ArrayList<>();
@@ -77,8 +75,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void returnCompletedTasks() {
-
-        String[] contacts ={"Lipa na Mpesa", "Checkout with iPay"};
+        String returned_journ= new JournalDbAdapter(getApplicationContext()).getData();
+        String[] contacts ={"Lipa na Mpesa", "Checkout with iPay", "whichever"};
 
         for (int i = 0; i < contacts.length; i++) {
             ListItem tasks = new ListItem();
@@ -140,6 +138,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        }else if(id ==R.id.nav_logout){
+            Intent loginIntent =new Intent(getApplicationContext(),JournalLogin.class);
+            startActivity(loginIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
