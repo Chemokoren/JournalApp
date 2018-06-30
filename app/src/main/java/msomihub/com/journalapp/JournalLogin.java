@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,6 +26,8 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
     private static final String TAG =JournalLogin.class.getName();
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
+    Button signOut, disconnectButton;
+
     private TextView mStatusTextView;
     private static int RC_SIGN_IN = 100;
     @Override
@@ -33,13 +37,15 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        views
-
         mStatusTextView = findViewById(R.id.status);
+        signOut =findViewById(R.id.sign_out_button);
+        disconnectButton=findViewById(R.id.disconnect_button);
         // Set the dimensions of the sign-in button.
         signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
+        signOut.setOnClickListener(this);
+        disconnectButton.setOnClickListener(this);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -53,8 +59,6 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        // Check for existing Google Sign In account, if the user is already signed in
-// the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
@@ -84,7 +88,8 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // ...
+                        Intent loginEntry =new Intent(getApplicationContext(), JournalLogin.class);
+                          startActivity(loginEntry);
                     }
                 });
     }
@@ -93,7 +98,8 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // ...
+                        Intent loginEntry =new Intent(getApplicationContext(), JournalLogin.class);
+                        startActivity(loginEntry);
                     }
                 });
     }
@@ -128,12 +134,13 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
         if (account != null) {
             mStatusTextView.setText(getString(R.string.signed_in_fmt, account.getDisplayName()));
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
             Intent journalEntry =new Intent(getApplicationContext(), MainActivity.class);
             startActivity(journalEntry);
+//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+//
         } else {
             mStatusTextView.setText(R.string.signed_out);
-
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }

@@ -6,15 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import msomihub.com.journalapp.JournalDb.JournalDbAdapter;
+import msomihub.com.journalapp.JournalDb.JournalDb;
 
 public class JournalEntry extends AppCompatActivity implements View.OnClickListener {
     EditText editText;
@@ -55,15 +51,47 @@ public class JournalEntry extends AppCompatActivity implements View.OnClickListe
         });
 
         toolbar.setNavigationOnClickListener(this);
+        checkForJournalVal();
+    }
+
+    public void checkForJournalVal(){
+        Intent journIntent =getIntent();
+        String journVal =journIntent.getStringExtra("journal_val");
+        String journId =journIntent.getStringExtra("journal_id");
+//        String journVal="I am coming home";
+        if(journVal != null && !journVal.isEmpty()){
+            editText.setText(journVal +" "+journId);
+        }else{
+
+        }
+//        if(journVal.length()>0){
+//            editText.setText(journVal);
+//        }
     }
 
 
     @Override
     public void onClick(View v) {
         if (editText.getText().toString().length() > 0) {
-//            Toast.makeText(this, "Data: "+editText.getText(), Toast.LENGTH_SHORT).show();
+            Intent journIntent =getIntent();
+            String journId =journIntent.getStringExtra("journal_id");
+            if(journId != null && !journId.isEmpty()){
+                new JournalDb(getApplicationContext()).updateJournalDate(editText.getText().toString(),journId);
+                Toast.makeText(this, "Journal Updated Successfully ", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-            new JournalDbAdapter(getApplicationContext()).insertData(editText.getText().toString(),"1");
+            }else {
+                new JournalDb(getApplicationContext()).insertData(editText.getText().toString(), "1");
+                Toast.makeText(this, "Journal Saved Successfully ", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        }else{
+            Intent notificationsIntent = new Intent(getApplicationContext(), MainActivity.class);
+            notificationsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(notificationsIntent);
+            finish();
+
         }
     }
 }

@@ -16,6 +16,7 @@
         </activity>
         <activity
             android:name=".JournalEntry"
+            android:label="@string/journal_entry"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".JournalLogin"
