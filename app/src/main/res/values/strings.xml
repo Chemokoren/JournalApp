@@ -14,4 +14,14 @@
     <string name="signed_in_fmt">Signed in as: %s</string>
     <string name="desc_google_icon">Google Logo</string>
     <string name="journal_entry">Journal Entry</string>
+    <string name="delete">Delete</string>
+    <string name="pdf">PDF</string>
+    <string name="share">Share</string>
+    <string name="hint_subject">Subject</string>
+    <string name="hint_body">Body</string>
+    <string name="title_activity_i_text">iTextActivity</string>
+    <string name="journal_pdf">Journal PDF</string>
+    <string name="label_email">Email</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_preview">Preview</string>
 </resources>

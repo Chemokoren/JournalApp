@@ -114,7 +114,7 @@ public class JournalDb {
         contentValues.put(journalDbHelper.JOURN_NAME,journ_name);
         contentValues.put(journalDbHelper.MyDATE,dateNow());
         String[] whereArgs= {journ_id};
-        int count =db.update(journalDbHelper.TABLE_NAME,contentValues, journalDbHelper.JOURN_NAME +" = ?",whereArgs );
+        int count =db.update(journalDbHelper.TABLE_NAME,contentValues, journalDbHelper.UID +" = ?",whereArgs );
         return count;
     }
 
