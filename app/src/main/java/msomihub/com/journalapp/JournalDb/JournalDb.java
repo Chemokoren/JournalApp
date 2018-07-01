@@ -42,33 +42,6 @@ public class JournalDb {
         return todays_d;
     }
 
-//    public ArrayList<String> getData()
-//    {
-//        SQLiteDatabase db = myhelper.getWritableDatabase();
-//        String[] columns = {journalDbHelper.UID, journalDbHelper.JOURN_NAME, journalDbHelper.MyDATE};
-//        Cursor cursor =db.query(journalDbHelper.TABLE_NAME,columns,null,null,null,null,null);
-////        StringBuffer buffer= new StringBuffer();
-//        ArrayList<String> my_data = new ArrayList<>();
-//        ArrayList<String> my_dt = new ArrayList<>();
-//        ArrayList<String> my_gen = new ArrayList<>();
-//        String buffer= "";
-//        while (cursor.moveToNext())
-//        {
-//            int cid =cursor.getInt(cursor.getColumnIndex(journalDbHelper.UID));
-//            String name =cursor.getString(cursor.getColumnIndex(journalDbHelper.JOURN_NAME));
-//            String  my_date =cursor.getString(cursor.getColumnIndex(journalDbHelper.MyDATE));
-////            String combined_journal = my_date + "  \n" + name +" \n";
-//            String combined_journal = name +" \n";
-//            buffer=combined_journal;
-//            my_data.add(buffer);
-//            my_dt.add(my_date);
-////            buffer.append(cid+ "   " + name + "   " + my_date +" \n");
-//        }
-//        my_gen.addAll(my_data);
-//        my_gen.addAll(my_dt);
-//        Log.e("buffermanenos",""+my_gen);
-//        return my_gen;
-//    }
 
     public ArrayList<JournalModel> getAllJournals(){
         SQLiteDatabase db = myhelper.getWritableDatabase();
@@ -83,8 +56,6 @@ public class JournalDb {
             JournalModel customer = new JournalModel(cid, name, my_date);
             journalList.add(customer);
         }
-
-//        Log.e("buffermanenos",""+journalList);
         return journalList;
 
     }
@@ -93,8 +64,7 @@ public class JournalDb {
     {
         SQLiteDatabase db = myhelper.getWritableDatabase();
         String[] whereArgs ={uname};
-
-        int count =db.delete(journalDbHelper.TABLE_NAME , journalDbHelper.JOURN_NAME +" = ?",whereArgs);
+        int count =db.delete(journalDbHelper.TABLE_NAME , journalDbHelper.UID +" = ?",whereArgs);
         return  count;
     }
 

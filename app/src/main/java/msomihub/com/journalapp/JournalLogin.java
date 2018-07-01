@@ -26,7 +26,6 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
     private static final String TAG =JournalLogin.class.getName();
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
-    Button signOut, disconnectButton;
 
     private TextView mStatusTextView;
     private static int RC_SIGN_IN = 100;
@@ -38,21 +37,14 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         mStatusTextView = findViewById(R.id.status);
-        signOut =findViewById(R.id.sign_out_button);
-        disconnectButton=findViewById(R.id.disconnect_button);
-        // Set the dimensions of the sign-in button.
         signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
-        signOut.setOnClickListener(this);
-        disconnectButton.setOnClickListener(this);
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
@@ -68,12 +60,6 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.sign_in_button:
                 signIn();
-                break;
-            case R.id.sign_out_button:
-                signOut();
-                break;
-            case R.id.disconnect_button:
-                revokeAccess();
                 break;
         }
     }
@@ -107,11 +93,7 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -119,12 +101,8 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
             updateUI(null);
         }
@@ -136,9 +114,8 @@ public class JournalLogin extends AppCompatActivity implements View.OnClickListe
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
             Intent journalEntry =new Intent(getApplicationContext(), MainActivity.class);
+            journalEntry.putExtra("login_account",mStatusTextView.getText().toString());
             startActivity(journalEntry);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-//
         } else {
             mStatusTextView.setText(R.string.signed_out);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);

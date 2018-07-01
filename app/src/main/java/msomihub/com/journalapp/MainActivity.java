@@ -1,24 +1,21 @@
 package msomihub.com.journalapp;
 
-import android.content.DialogInterface;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +26,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import msomihub.com.journalapp.Adapters.JournalAdapter;
 import msomihub.com.journalapp.JournalDb.JournalDb;
@@ -38,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView journalView;
+
     private RecyclerView.Adapter adapter;
     private ArrayList<JournalModel> listItems;
     GoogleApiClient mGoogleApiClient;
@@ -68,6 +65,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         initialize();
         returnCompletedTasks();
+        returnActiveAccount();
+
     }
 
     private void initialize() {
@@ -78,6 +77,22 @@ public class MainActivity extends AppCompatActivity
         adapter = new JournalAdapter(listItems, this);
         journalView.setAdapter(adapter);
     }
+    public void returnActiveAccount(){
+
+        try {
+            Intent getLoggedInAccount = getIntent();
+            String logMail = getLoggedInAccount.getStringExtra("login_account").toString();
+            Log.e("login_account",""+logMail);
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            View headerView = navigationView.getHeaderView(0);
+            TextView navUsername = (TextView) headerView.findViewById(R.id.tvEmail);
+            navUsername.setText(logMail);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void returnCompletedTasks() {
 
@@ -85,24 +100,11 @@ public class MainActivity extends AppCompatActivity
         JournalModel tasks = new JournalModel();
 
         for (JournalModel customer : returned_journ) {
-//            Object rowData[] = {customer.getNo(), customer.getDat(), customer.getDesc()};
-//            tableModel.addRow(rowData);
             listItems.add(customer);
             if (listItems != null) {
                 adapter.notifyDataSetChanged();
             }
         }
-
-//        for (int i = 0; i < returned_journ.size(); i++) {
-//            JournalModel tasks = new JournalModel();
-//            tasks.setNo();
-//            tasks.setDat();
-//            tasks.setDesc(returned_journ.get(i).toString());
-//            listItems.add(tasks);
-//            if (listItems != null) {
-//                adapter.notifyDataSetChanged();
-//            }
-//        }
 
     }
     @Override
@@ -115,37 +117,34 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_camera) {
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        if (id == R.id.nav_support) {
+            try{
+                Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + "humphreykibet@gmail.com"));
+                intent.putExtra(Intent.EXTRA_SUBJECT,"Subject...");
+                intent.putExtra(Intent.EXTRA_TEXT, "");
+                startActivity(intent);
+            }catch(ActivityNotFoundException e){
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+            try {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT, "JournalApp");
+                String sAux = "\nLet me recommend you this application\n\n";
+                sAux = sAux + "Journal App \n\n";
+                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                startActivity(Intent.createChooser(i, "choose one"));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.nav_logout) {
             signOut();

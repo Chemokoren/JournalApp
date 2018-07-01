@@ -1,9 +1,11 @@
 package msomihub.com.journalapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -83,17 +85,12 @@ public class JournalEntry extends AppCompatActivity implements View.OnClickListe
         Intent journIntent = getIntent();
         String journVal = journIntent.getStringExtra("journal_val");
         String journId = journIntent.getStringExtra("journal_id");
-//        String journVal="I am coming home";
         if (journVal != null && !journVal.isEmpty()) {
-            editText.setText(journVal + " " + journId);
+            editText.setText(journVal);
         } else {
 
         }
-//        if(journVal.length()>0){
-//            editText.setText(journVal);
-//        }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -133,12 +130,15 @@ public class JournalEntry extends AppCompatActivity implements View.OnClickListe
         String journId = journIntent.getStringExtra("journal_id");
         if (journId != null && !journId.isEmpty()) {
             if (id == R.id.action_delete) {
-                Toast.makeText(this, "Are you sure you want to delete", Toast.LENGTH_SHORT).show();
+                new JournalDb(getApplicationContext()).delete(journId);
+                Toast.makeText(this, "Journal Deleted Successfully", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 return true;
             } else if (id == R.id.action_PDF) {
                 createPDF();
                 return true;
             } else if (id == R.id.action_Share) {
+                shareContent("Journal", "Share Via", getJournal());
                 return true;
             }
 
@@ -176,7 +176,7 @@ public class JournalEntry extends AppCompatActivity implements View.OnClickListe
 
     public void createPDF() {
         String FILE = Environment.getExternalStorageDirectory().toString()
-                + "/PDF/" + "Name.pdf";
+                + "/PDF/" + "journal.pdf";
 
         // Add Permission into Manifest.xml
         // <uses-permission
@@ -189,8 +189,6 @@ public class JournalEntry extends AppCompatActivity implements View.OnClickListe
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/PDF");
         myDir.mkdirs();
-
-        Log.e("myDir myDir alc",""+myDir);
 
         // Create Pdf Writer for Writting into New Created Document
         try {
@@ -222,7 +220,7 @@ public class JournalEntry extends AppCompatActivity implements View.OnClickListe
     {
         document.addTitle("Personal Journal");
         document.addSubject("Person Info");
-        document.addKeywords("Personal,	Education, Skills");
+        document.addKeywords("Personal,	Journal, Skills");
         document.addAuthor("TAG");
         document.addCreator("TAG");
     }
@@ -240,7 +238,7 @@ public class JournalEntry extends AppCompatActivity implements View.OnClickListe
         // Set Font in this Paragraph
         prHead.setFont(titleFont);
         // Add item into Paragraph
-        prHead.add("Personal Journal – Name\n");
+        prHead.add("Personal Journal – \n");
 
         // Create Table into Document with 1 Row
         PdfPTable myTable = new PdfPTable(1);
@@ -300,5 +298,15 @@ public class JournalEntry extends AppCompatActivity implements View.OnClickListe
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
+
+    public void shareContent(String subject,String share, String body){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = body;
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, share));
+    }
+
 }
 
