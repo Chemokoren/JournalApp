@@ -47,27 +47,27 @@ The user has other additional functionalities presented to them:-
 -These are presented on the Main Drawer and the user can access them by clicking on the humberger icon on the left of the home page.
 These enable the user to carry out the following core roles:
 
-```
--Share the Journal App
-```
 ![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472587.png)
+
+```
+-Share the Journal App via message, email e.t.c.
+```
+![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472644.png)
+![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472652.png)
+
 
 ```
 -Send feedback through Journal Support.
 -The latter can be achieved by sending an email after the user clicks on the support icon.
 ```
- 
-
-![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472644.png)
+![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472665.png)
 
 ```
 -Logout from the App. The user will be exited from the given account and returned to the login screen
 ```
-
-
-
-![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472652.png)
-![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472665.png)
 ![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530474682.png)
-# Undone Sections
--UI & Unit Tests
+
+
+
+
+
