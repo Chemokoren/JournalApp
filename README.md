@@ -31,15 +31,15 @@ The user can also make changes on any event by clicking on it. The user can add 
 using the tick icon.
 
 ![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472636.png)
-
-The user has other additional functionalities presented to them:-
-
--Share the event on message,email or whatsapp,
--They can also delete an event
--They can convert the events content into PDF format,
-
 ![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472600.png)
 ![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472627.png)
+
+The user has other additional functionalities presented to them:-
+```
+-Share the event on message,email or whatsapp,
+-They can also delete an event,
+-They can convert the events content into PDF format
+```
 ![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530474667.png)
 
 # Other General Functionalities
@@ -63,5 +63,8 @@ These enable the user to carry out the following core roles:
 -Logout from the App. The user will be exited from the given account and returned to the login screen
 ```
 ![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530474682.png)
-
-
+# APK
+```
+The apk is located on:-
+https://github.com/Chemokoren/JournalApp/blob/master/app/release/app-release.apk
+```
