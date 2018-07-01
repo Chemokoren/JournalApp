@@ -20,6 +20,7 @@ In the design and implementation of this applicationm, I have used the following
 The user is presented with a Login page, and need to authenticate via Google
 ```
 
+![Screenshot](https://github.com/Chemokoren/JournalApp/blob/master/images/Screenshot_1530472548.png)
 /home/kibsoft/Desktop/Screenshot_1530472885.png
 /home/kibsoft/Desktop/Screenshot_1530472548.png
 /home/kibsoft/Desktop/Screenshot_1530472572.png
