@@ -3,23 +3,23 @@ Journal App is a basic application that will enable any user to keep a daily rec
 In the design and implementation of this applicationm, I have used the following components
 -SQLite Database
 -ViewModel
-Technical Requirements to run the Application
+#Technical Requirements to run the Application
 -Android studio 3.1.3
 -PC with atleast 4GB of RAM, preferably core i5
 
-Phones to Run the APP
+#Phones to Run the APP
 -Have a minSdkVersion of 15
 
-Initial Setup
+#Initial Setup
 -Clone the Application from Github on the Following link: https://github.com/Chemokoren/JournalApp.git
 -You can then import the application into your Project
 
-Login Page
+#Login Page
 The user is presented with a Login page, and need to authenticate via Google
 /home/kibsoft/Desktop/Screenshot_1530472885.png
 /home/kibsoft/Desktop/Screenshot_1530472548.png
 /home/kibsoft/Desktop/Screenshot_1530472572.png
-Home Page
+#Home Page
 User is presented with the Apps default page which will show the events already noted by the user. Ortherwise it will be empty with
 a floating action button to enable the user to note new things.
 The user can also make changes on any event by clicking on it. The user can add or delete some of the content and update at will by
@@ -34,7 +34,7 @@ The user has other additional functionalities presented to them:-
 /home/kibsoft/Desktop/Screenshot_1530474667.png
 /home/kibsoft/Desktop/Screenshot_1530472627.png
 
-Other General Functionalities
+#Other General Functionalities
 -These are presented on the Main Drawer and the user can access them by clicking on the humberger icon on the left of the home page.
 They will enable the user to carry out the following core roles:
 -Share the Journal App
@@ -46,5 +46,5 @@ They will enable the user to carry out the following core roles:
 /home/kibsoft/Desktop/Screenshot_1530472665.png
 /home/kibsoft/Desktop/Screenshot_1530474708.png
 /home/kibsoft/Desktop/Screenshot_1530474682.png
-Undone Sections
+#Undone Sections
 -UI & Unit Tests
